@@ -1,0 +1,5 @@
+#include "include/AssetManager.hpp"
+#include "include/Game.hpp"
+#include "include/InputManager.hpp"
+#include "include/State.hpp"
+#include "include/StateMachine.hpp"
