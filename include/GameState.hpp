@@ -6,8 +6,8 @@
 
 #include "GameUtils/GameUtils.hpp"
 
-#include "Button.hpp"
 #include "RectButton.hpp"
+#include "Player.hpp"
 
 class GameState : public ch::State {
 public:
@@ -29,7 +29,10 @@ private:
     // buttons
     RectButton _pauseButton;
 
-    // sprites
-    std::list<sf::Sprite> stars;
-    sf::Sprite _ship;
+    // background
+    std::list<sf::Sprite> _stars;
+    
+    // characters
+    Player player1;
+    Player player2;
 };
