@@ -18,7 +18,7 @@ int main() {
     ch::Game game(WINDOW_WIDTH, WINDOW_HEIGHT, "Blocker");
 
     game.getData()->machine.addState(ch::StateRef(new MenuState(game.getData())));
-
+    game.getData()->assets.defaultTex = "../assets/textures/default.png";
     game.run();
 
     return EXIT_SUCCESS;

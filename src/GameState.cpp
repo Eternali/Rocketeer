@@ -37,7 +37,7 @@ void GameState::initPlayers() {
 
     std::vector<sf::Keyboard::Key> p1inputs = { sf::Keyboard::Key::A, sf::Keyboard::Key::D, sf::Keyboard::Key::W };
     std::vector<sf::Keyboard::Key> p2inputs = { sf::Keyboard::Key::Left, sf::Keyboard::Key::Right, sf::Keyboard::Key::Up };
-    this->player1.init(this->_data, "../assets/textures/ship.png", sf::Vector2i(200, 200), p1inputs);
+    this->player1.init(this->_data, "../assets/textures/ship1.png", sf::Vector2i(128, 128), p1inputs);
     this->player2.init(this->_data, "../assets/textures/ship2.png", sf::Vector2i(400, 400), p2inputs);
 
 }

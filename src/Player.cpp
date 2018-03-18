@@ -11,7 +11,7 @@ void Player::init(ch::GameDataRef gameData, std::string bodyTexLoc, sf::Vector2i
     this->inputActivations.fire = { inputs[2], false };
     
     this->_gameData->assets.loadTexture("p1Tex", bodyTexLoc);
-    this->_gameData->assets.loadTexture("p1Tex_t", "../assets/animations/rocketFire.png");
+    this->_gameData->assets.loadTexture("p1Tex_t", "../assets/anims/rocketfire.png");
 
     this->_body.setTexture(this->_gameData->assets.getTexture("p1Tex"));
     this->_tail.init(this->_gameData->assets.getTexture("p1Tex_t"), 128.0f, 0.25f);

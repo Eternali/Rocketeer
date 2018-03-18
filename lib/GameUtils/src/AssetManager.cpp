@@ -7,6 +7,8 @@ namespace ch {
 
         if (tex.loadFromFile(filename))
             this->_textures[name] = tex;
+        else if (tex.loadFromFile(this->defaultTex))
+            this->_textures[name] = tex;
     }
 
     sf::Texture &AssetManager::getTexture(std::string name) {
