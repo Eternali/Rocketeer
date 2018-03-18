@@ -19,4 +19,14 @@ namespace ch {
         return static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
     }
 
+    void InputManager::getKeyboardActivation(KeyActivation &key) {
+        key.isActive = sf::Keyboard::isKeyPressed(key.key);
+    }
+
+    // void InputManager::getKeyboardActivation(std::list<KeyActivation> keys) {
+    //     for (std::list<sf::Keyboard::Key>::iterator it = keys.begin(); it != keys.end; it++) {
+    //         *it.isActive = sf::Keyboard::isKeyPressed(*it.key);
+    //     }
+    // }
+
 }

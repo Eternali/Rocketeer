@@ -1,25 +1,31 @@
 #pragma once
 
-#include <string>
 #include <cmath>
 
 #include <SFML/Graphics.hpp>
 
-class Animation {
-public:
-    Animation(std::string textureLocation, float frameWidth, float speed, int pos = 0);
+namespace ch {
 
-    void update(float dt);
-    void draw(sf::RenderWindow &window);
+    class Animation {
+    public:
+        Animation() {  };
+        Animation(sf::Texture texture, float frameWidth, float speed, int pos = 0);
 
-    int pos;
-private:
-    int _maxPos;
-    float _fwidth;
-    float _speed;
-    float _accum = 0.0f;
+        void init(sf::Texture texture, float frameWidth, float speed, int pos = 0);
 
-    sf::Texture _texture;
-    sf::IntRect _srcRect;
-    sf::Sprite _body;
-};
+        void update(float dt);
+        void draw(sf::RenderWindow &window);
+
+        int pos;
+    private:
+        int _maxPos;
+        float _fwidth;
+        float _speed;
+        float _accum = 0.0f;
+
+        sf::Texture _texture;
+        sf::IntRect _srcRect;
+        sf::Sprite _body;
+    };
+
+}

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <list>
-
 #include <SFML/Graphics.hpp>
 
 #include "GameUtils/GameUtils.hpp"
@@ -21,6 +19,7 @@ public:
 
 private:
     void initButtons();
+    void initPlayers();
 
     ch::GameDataRef _data;
 
@@ -30,7 +29,7 @@ private:
     RectButton _pauseButton;
 
     // background
-    std::list<sf::Sprite> _stars;
+    std::vector<sf::Sprite> _stars;
     
     // characters
     Player player1;
