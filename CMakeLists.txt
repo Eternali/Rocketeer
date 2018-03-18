@@ -11,21 +11,21 @@ set(PROJECT_SRC_DIR ${PROJECT_SOURCE_DIR}/src)
 set(IPC_LINK_FLAGS "-pthread")
 
 set(headers
-        ${PROJECT_INCLUDE_DIR}/Button.hpp
-        ${PROJECT_INCLUDE_DIR}/MenuState.hpp
-        ${PROJECT_INCLUDE_DIR}/settings.hpp
-        ${PROJECT_INCLUDE_DIR}/RectButton.hpp
-        ${PROJECT_INCLUDE_DIR}/GameState.hpp
-        ${PROJECT_INCLUDE_DIR}/IPC.hpp
-        ${PROJECT_INCLUDE_DIR}/Player.hpp)
+    ${PROJECT_INCLUDE_DIR}/Button.hpp
+    ${PROJECT_INCLUDE_DIR}/MenuState.hpp
+    ${PROJECT_INCLUDE_DIR}/settings.hpp
+    ${PROJECT_INCLUDE_DIR}/RectButton.hpp
+    ${PROJECT_INCLUDE_DIR}/GameState.hpp
+    ${PROJECT_INCLUDE_DIR}/IPC.hpp
+    ${PROJECT_INCLUDE_DIR}/Player.hpp)
 
 set(sources
-        ${PROJECT_SRC_DIR}/main.cpp
-        ${PROJECT_SRC_DIR}/MenuState.cpp
-        ${PROJECT_SRC_DIR}/RectButton.cpp
-        ${PROJECT_SRC_DIR}/GameState.cpp
-        ${PROJECT_SRC_DIR}/IPC.cpp
-        ${PROJECT_SRC_DIR}/Player.cpp)
+    ${PROJECT_SRC_DIR}/main.cpp
+    ${PROJECT_SRC_DIR}/MenuState.cpp
+    ${PROJECT_SRC_DIR}/RectButton.cpp
+    ${PROJECT_SRC_DIR}/GameState.cpp
+    ${PROJECT_SRC_DIR}/IPC.cpp
+    ${PROJECT_SRC_DIR}/Player.cpp)
 
 add_subdirectory(${LIB_DIR}/Box2D)
 add_subdirectory(${LIB_DIR}/GameUtils)
