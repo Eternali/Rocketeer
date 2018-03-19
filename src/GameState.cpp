@@ -1,3 +1,4 @@
+#include <iostream>
 #include <sstream>
 
 #include "GameState.hpp"
@@ -37,8 +38,8 @@ void GameState::initPlayers() {
 
     std::vector<sf::Keyboard::Key> p1inputs = { sf::Keyboard::Key::A, sf::Keyboard::Key::D, sf::Keyboard::Key::W };
     std::vector<sf::Keyboard::Key> p2inputs = { sf::Keyboard::Key::Left, sf::Keyboard::Key::Right, sf::Keyboard::Key::Up };
-    this->player1.init(this->_data, "../assets/textures/ship1.png", sf::Vector2i(128, 128), p1inputs);
-    this->player2.init(this->_data, "../assets/textures/ship2.png", sf::Vector2i(400, 400), p2inputs);
+    this->player1.init(this->_data, "../assets/textures/ship1.png", sf::Vector2f(128.0f, 128.0f), p1inputs);
+    this->player2.init(this->_data, "../assets/textures/ship2.png", sf::Vector2f(400.0f, 400.0f), p2inputs);
 
 }
 
