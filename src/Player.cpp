@@ -17,7 +17,9 @@ void Player::init(ch::GameDataRef gameData, std::string bodyTexLoc, sf::Vector2f
     this->_body.setTexture(this->_gameData->assets.getTexture("p1Tex"));
     this->_body.setOrigin(this->_body.getLocalBounds().width / 2, this->_body.getLocalBounds().height / 2);
     this->_body.setPosition(initPos);
-    this->_tail.init(this->_gameData->assets.getTexture("p1Tex_t"), 128.0f, 0.25f);
+    sf::FloatRect tmpBounds = this->_body.getGlobalBounds();
+    sf::Vector2f tailCenter(tmpBounds.left + tmpBounds.width / 2, tmpBounds.top + tmpBounds.height);
+    this->_tail.init(initPos, 180.0f, tailCenter, this->_gameData->assets.getTexture("p1Tex_t"), 128.0f, 0.2f);
 
     // resize sprites to targets
     sf::Vector2f bodyTargetSize(64.0f, 128.0f);
@@ -34,9 +36,10 @@ void Player::init(ch::GameDataRef gameData, std::string bodyTexLoc, sf::Vector2f
 void Player::update(float dt) {
     this->_body.rotate(this->data.avel);
     this->_body.move(this->data.vel.x, this->data.vel.y);
+    if (this->_firing) this->_tail.update(dt, this->data.vel, this->data.avel);
 
     // adjust to SFML's rotation scheme (and translate to radians)
-    this->data.angle = (this->_body.getRotation() + 90.0f) * (M_PI / 180.0f);
+    this->_angle = (this->_body.getRotation() + 90.0f) * (M_PI / 180.0f);
     this->data.bounds = this->_body.getGlobalBounds();
 
     // check out of bounds
@@ -62,8 +65,15 @@ void Player::handleInput() {
     else this->data.avel = 0;
 
     if (this->inputActivations.fire.isActive) {
-        this->data.vel.x -= this->_fforce * std::cos(this->data.angle);
-        this->data.vel.y -= this->_fforce * std::sin(this->data.angle);
+        this->data.vel.x -= this->_fforce * std::cos(this->_angle);
+        this->data.vel.y -= this->_fforce * std::sin(this->_angle);
+        if (!this->_firing) {
+            this->_tail.pos = 0;
+            this->_firing = true;
+        }
+    } else {
+        this->_firing = false;
+        this->_tail.pos = 0;
     }
 
     // adjust for friction and prevent overcompensation

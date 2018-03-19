@@ -2,12 +2,28 @@
 
 namespace ch {
 
-    Animation::Animation(sf::Texture texture, float frameWidth, float speed, int pos) {
-        this->init(texture, frameWidth, speed, pos);
+    Animation::Animation(
+        sf::Vector2f initPos,
+        float initRot,
+        sf::Vector2f center,
+        sf::Texture texture,
+        float frameWidth,
+        float speed,
+        int pos) {
+
+        this->init(initPos, initRot, center, texture, frameWidth, speed, pos);
 
     }
 
-    void Animation::init(sf::Texture texture, float frameWidth, float speed, int pos) {
+    void Animation::init(
+        sf::Vector2f initPos,
+        float initRot,
+        sf::Vector2f center,
+        sf::Texture texture,
+        float frameWidth,
+        float speed,
+        int pos) {
+
         this->_texture = texture;
         this->_fwidth = frameWidth;
         this->_speed = speed;
@@ -17,8 +33,12 @@ namespace ch {
 
         this->_body.setTexture(this->_texture);
         this->_body.setTextureRect(this->_srcRect);
+        this->_body.setOrigin(center);
+        this->_body.setPosition(initPos);
+        this->_body.setRotation(initRot);
 
         this->_maxPos = std::round(this->_texture.getSize().x - this->_fwidth / this->_fwidth);
+
     }
 
     /**
@@ -29,11 +49,11 @@ namespace ch {
      * 4: update accumulator with time consumed by this animation
      * 5: if the animation position will extend beyond texture range limits,
      *    reverse the direction and reduce position delta by difference consumed by wrap-around
-     * 6: update position, move animator source rect, and update sprite texture view.
+     * 6: update rotation, position(s), move animator source rect, and update sprite texture view.
      */
-    void Animation::update(float dt) {
+    void Animation::update(float dt, sf::Vector2f vel, float avel) {
         this->_accum += dt;
-        if (this->_accum < std::abs(this->_speed)) return;
+        // if (this->_accum < std::abs(this->_speed)) return;
         
         int delta = std::round(this->_accum / this->_speed);
         this->_accum -= this->_accum / std::abs(this->_speed);
@@ -42,6 +62,8 @@ namespace ch {
             delta -= ((this->pos + delta < 0) ? 0 : this->_maxPos) - this->pos;
         }
 
+        this->_body.rotate(avel);
+        this->_body.move(vel.x, vel.y);
         this->pos += delta;
         this->_srcRect.left = this->pos * this->_fwidth;
         this->_body.setTextureRect(this->_srcRect);

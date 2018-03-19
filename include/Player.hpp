@@ -15,13 +15,6 @@ struct PlayerInput {
     ch::KeyActivation fire;
 };
 
-struct PlayerData {
-    sf::Vector2f vel;
-    float avel;
-    sf::FloatRect bounds;
-    float angle;  // angle in radiens
-};
-
 class Player {
 public:
     Player() {  };
@@ -35,11 +28,13 @@ public:
 
     PlayerInput inputActivations;
     PlayerData data;
-
+    PlayerData tailData;
 private:
     ch::GameDataRef _gameData;
 
     bool _firing = false;
+    float _angle;  // angle in radians
+
     sf::Sprite _body;
     ch::Animation _tail;
 

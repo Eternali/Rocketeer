@@ -1,19 +1,42 @@
 #pragma once
 
+#include <iostream>
 #include <cmath>
 
 #include <SFML/Graphics.hpp>
 
 namespace ch {
 
+    struct SpriteData {
+        sf::Vector2f vel;
+        float avel;
+        sf::FloatRect bounds;
+    };
+
     class Animation {
     public:
         Animation() {  };
-        Animation(sf::Texture texture, float frameWidth, float speed, int pos = 0);
+        Animation(
+            sf::Vector2f initPos,
+            SpriteData data,
+            float initRot,
+            sf::Vector2f center,
+            sf::Texture texture,
+            float frameWidth,
+            float speed,
+            int pos = 0);
 
-        void init(sf::Texture texture, float frameWidth, float speed, int pos = 0);
+        void init(
+            sf::Vector2f initPos,
+            SpriteData data,
+            float initRot,
+            sf::Vector2f center,
+            sf::Texture texture,
+            float frameWidth,
+            float speed,
+            int pos = 0);
 
-        void update(float dt);
+        void update(float dt, sf::Vector2f vel, float avel);
         void draw(sf::RenderWindow &window);
 
         int pos;
