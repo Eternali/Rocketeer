@@ -43,6 +43,7 @@ private:
     sf::Sprite _body;
     ch::Animation _tail;
 
-    float _turnSpeed = 3.0f;
+    float _turnSpeed = 5.5f;
     float _fforce = 0.2f;
+    float _bounce = 0.3f;
 };
