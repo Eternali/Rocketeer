@@ -9,9 +9,10 @@ namespace ch {
         sf::Texture texture,
         float frameWidth,
         float speed,
-        int pos) {
+        int pos,
+        SpriteDataRef data) {
 
-        this->init(initPos, initRot, center, texture, frameWidth, speed, pos);
+        this->init(initPos, initRot, center, texture, frameWidth, speed, pos, data);
 
     }
 
@@ -22,7 +23,8 @@ namespace ch {
         sf::Texture texture,
         float frameWidth,
         float speed,
-        int pos) {
+        int pos,
+        SpriteDataRef data) {
 
         this->_texture = texture;
         this->_fwidth = frameWidth;
@@ -51,7 +53,7 @@ namespace ch {
      *    reverse the direction and reduce position delta by difference consumed by wrap-around
      * 6: update rotation, position(s), move animator source rect, and update sprite texture view.
      */
-    void Animation::update(float dt, sf::Vector2f vel, float avel) {
+    void Animation::update(float dt) {
         this->_accum += dt;
         // if (this->_accum < std::abs(this->_speed)) return;
         
@@ -62,8 +64,8 @@ namespace ch {
             delta -= ((this->pos + delta < 0) ? 0 : this->_maxPos) - this->pos;
         }
 
-        this->_body.rotate(avel);
-        this->_body.move(vel.x, vel.y);
+        this->_body.rotate(this->data->avel);
+        this->_body.move(this->data->vel.x, this->data->vel.y);
         this->pos += delta;
         this->_srcRect.left = this->pos * this->_fwidth;
         this->_body.setTextureRect(this->_srcRect);

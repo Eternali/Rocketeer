@@ -27,8 +27,7 @@ public:
     void draw();
 
     PlayerInput inputActivations;
-    PlayerData data;
-    PlayerData tailData;
+    ch::SpriteDataRef data;
 private:
     ch::GameDataRef _gameData;
 

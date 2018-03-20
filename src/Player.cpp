@@ -19,7 +19,7 @@ void Player::init(ch::GameDataRef gameData, std::string bodyTexLoc, sf::Vector2f
     this->_body.setPosition(initPos);
     sf::FloatRect tmpBounds = this->_body.getGlobalBounds();
     sf::Vector2f tailCenter(tmpBounds.left + tmpBounds.width / 2, tmpBounds.top + tmpBounds.height);
-    this->_tail.init(initPos, 180.0f, tailCenter, this->_gameData->assets.getTexture("p1Tex_t"), 128.0f, 0.2f);
+    this->_tail.init(initPos, 180.0f, tailCenter, this->_gameData->assets.getTexture("p1Tex_t"), 128.0f, 0.2f, 0, this->data);
 
     // resize sprites to targets
     sf::Vector2f bodyTargetSize(64.0f, 128.0f);
@@ -34,23 +34,23 @@ void Player::init(ch::GameDataRef gameData, std::string bodyTexLoc, sf::Vector2f
 }
 
 void Player::update(float dt) {
-    this->_body.rotate(this->data.avel);
-    this->_body.move(this->data.vel.x, this->data.vel.y);
-    if (this->_firing) this->_tail.update(dt, this->data.vel, this->data.avel);
+    this->_body.rotate(this->data->avel);
+    this->_body.move(this->data->vel.x, this->data->vel.y);
+    if (this->_firing) this->_tail.update(dt);
 
     // adjust to SFML's rotation scheme (and translate to radians)
     this->_angle = (this->_body.getRotation() + 90.0f) * (M_PI / 180.0f);
-    this->data.bounds = this->_body.getGlobalBounds();
+    this->data->bounds = this->_body.getGlobalBounds();
 
     // check out of bounds
-    if (this->data.bounds.left <= 0)
-        this->data.vel.x = this->_bounce;
-    else if (this->data.bounds.left + this->data.bounds.width >= this->_gameData->window.getSize().x)
-        this->data.vel.x = -this->_bounce;
-    if (this->data.bounds.top <= 0)
-        this->data.vel.y = this->_bounce;
-    else if (this->data.bounds.top + this->data.bounds.height >= this->_gameData->window.getSize().y)
-        this->data.vel.y = -this->_bounce;
+    if (this->data->bounds.left <= 0)
+        this->data->vel.x = this->_bounce;
+    else if (this->data->bounds.left + this->data->bounds.width >= this->_gameData->window.getSize().x)
+        this->data->vel.x = -this->_bounce;
+    if (this->data->bounds.top <= 0)
+        this->data->vel.y = this->_bounce;
+    else if (this->data->bounds.top + this->data->bounds.height >= this->_gameData->window.getSize().y)
+        this->data->vel.y = -this->_bounce;
 }
 
 void Player::handleInput() {
@@ -58,15 +58,15 @@ void Player::handleInput() {
     this->_gameData->input.getKeyboardActivation(this->inputActivations.right);
     this->_gameData->input.getKeyboardActivation(this->inputActivations.fire);
 
-    if (this->inputActivations.left.isActive && this->data.avel >= 0)
-        this->data.avel = -this->_turnSpeed;
-    else if (this->inputActivations.right.isActive && this->data.avel <= 0)
-        this->data.avel = this->_turnSpeed;
-    else this->data.avel = 0;
+    if (this->inputActivations.left.isActive && this->data->avel >= 0)
+        this->data->avel = -this->_turnSpeed;
+    else if (this->inputActivations.right.isActive && this->data->avel <= 0)
+        this->data->avel = this->_turnSpeed;
+    else this->data->avel = 0;
 
     if (this->inputActivations.fire.isActive) {
-        this->data.vel.x -= this->_fforce * std::cos(this->_angle);
-        this->data.vel.y -= this->_fforce * std::sin(this->_angle);
+        this->data->vel.x -= this->_fforce * std::cos(this->_angle);
+        this->data->vel.y -= this->_fforce * std::sin(this->_angle);
         if (!this->_firing) {
             this->_tail.pos = 0;
             this->_firing = true;
@@ -77,12 +77,12 @@ void Player::handleInput() {
     }
 
     // adjust for friction and prevent overcompensation
-    if (this->data.vel.x - FRICTION > 0) this->data.vel.x -= FRICTION;
-    else if (this->data.vel.x + FRICTION < 0) this->data.vel.x += FRICTION;
-    else this->data.vel.x = 0.0f;
-    if (this->data.vel.y - FRICTION > 0) this->data.vel.y -= FRICTION;
-    else if (this->data.vel.y + FRICTION < 0) this->data.vel.y += FRICTION;
-    else this->data.vel.y = 0.0f;
+    if (this->data->vel.x - FRICTION > 0) this->data->vel.x -= FRICTION;
+    else if (this->data->vel.x + FRICTION < 0) this->data->vel.x += FRICTION;
+    else this->data->vel.x = 0.0f;
+    if (this->data->vel.y - FRICTION > 0) this->data->vel.y -= FRICTION;
+    else if (this->data->vel.y + FRICTION < 0) this->data->vel.y += FRICTION;
+    else this->data->vel.y = 0.0f;
 }
 
 void Player::draw() {

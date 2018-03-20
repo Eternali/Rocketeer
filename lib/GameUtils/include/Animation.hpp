@@ -1,7 +1,8 @@
 #pragma once
 
-#include <iostream>
 #include <cmath>
+#include <iostream>
+#include <memory>
 
 #include <SFML/Graphics.hpp>
 
@@ -13,32 +14,35 @@ namespace ch {
         sf::FloatRect bounds;
     };
 
+    typedef std::shared_ptr<SpriteData> SpriteDataRef;
+
     class Animation {
     public:
         Animation() {  };
         Animation(
             sf::Vector2f initPos,
-            SpriteData data,
             float initRot,
             sf::Vector2f center,
             sf::Texture texture,
             float frameWidth,
             float speed,
-            int pos = 0);
+            int pos = 0,
+            SpriteDataRef data = nullptr);
 
         void init(
             sf::Vector2f initPos,
-            SpriteData data,
             float initRot,
             sf::Vector2f center,
             sf::Texture texture,
             float frameWidth,
             float speed,
-            int pos = 0);
+            int pos = 0,
+            SpriteDataRef data = nullptr);
 
-        void update(float dt, sf::Vector2f vel, float avel);
+        void update(float dt);
         void draw(sf::RenderWindow &window);
 
+        SpriteDataRef data;
         int pos;
     private:
         int _maxPos;
