@@ -26,6 +26,8 @@ namespace ch {
         int pos,
         SpriteDataRef data) {
 
+        this->data = data;
+
         this->_texture = texture;
         this->_fwidth = frameWidth;
         this->_speed = speed;
